@@ -1,0 +1,47 @@
+<odoo>
+    <record id="view_employee_form_inherited" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Job Grade">
+                    <group>
+                        <group>
+                            <field name="job_grade"/>
+                            <button name="action_sync_attendance" 
+                                    type="object" 
+                                    string="Sync Attendance" 
+                                    class="oe_highlight"/>
+                        </group>
+                        <group>
+                            <field name="attendance_device_id"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_form_inherit_attendance_log" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.attendance.log</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='personal_information']" position="after">
+                <page string="Attendance Logs">
+                    <group>
+                        <field name="attendance_log_ids" context="{'default_employee_id': active_id}">
+                            <tree>
+                                <field name="check_in" />
+                                <field name="check_out" />
+                                <field name="device_id" />
+                              
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

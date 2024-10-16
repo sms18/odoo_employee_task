@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_attendance_log_tree" model="ir.ui.view">
+        <field name="name">employee.attendance.log.tree</field>
+        <field name="model">employee.attendance.log</field>
+        <field name="arch" type="xml">
+            <tree string="Attendance Logs">
+                <field name="employee_id"/>
+                <field name="total_hours_month"/>
+                <field name="days_worked_month"/>
+            </tree>
+        </field>
+    </record>
+    
+
+    <record id="view_attendance_log_form" model="ir.ui.view">
+        <field name="name">employee.attendance.log.form</field>
+        <field name="model">employee.attendance.log</field>
+        <field name="arch" type="xml">
+            <form string="Attendance Log">
+                <sheet>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="check_in"/>
+                        <field name="check_out"/>
+                        <field name="device_id"/>
+                        <field name="total_hours_month" readonly="1"/>
+                        <field name="days_worked_month" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_attendance_summary_report" model="ir.actions.act_window">
+        <field name="name">Attendance Summary Report</field>
+        <field name="res_model">employee.attendance.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="domain">[('is_first_occurrence', '=', True)]</field>
+    </record>
+    
+    
+     <menuitem id="menu_attendance_summary_report" 
+              name="Attendance Summary Report" 
+              parent="hr.hr_menu_hr_reports"
+              sequence="10" 
+              action="action_attendance_summary_report"/>
+
+
+
+    <record id="view_attendance_summary_filter" model="ir.ui.view">
+        <field name="name">attendance.summary.filter</field>
+        <field name="model">employee.attendance.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="employee_id"/>
+                <field name="department_id" string="Department"  />
+                <filter name="filter_first_occurrence" string="First Occurrence" domain="[('is_first_occurrence', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+</odoo>
